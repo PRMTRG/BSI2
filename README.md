@@ -1,7 +1,6 @@
 # Python Examples of encryption/decryption
 
-## Available Algorithms:
-
+## Simple python project created to test out possiblities of:
 * ### AES
 * ### Blowfish
 * ### Triple DES
