@@ -1,3 +1,6 @@
+import os
+
+
 def message_to_data(message, block_size):
     while len(message) % block_size != 0:
         message += ' '
@@ -17,12 +20,19 @@ def read_file_s(filename):
 
 
 def write_to_file_b(filename, content):
+    ensure_dir(filename)
     with open(filename, "wb") as f:
         f.write(content)
 
 
 def write_to_file_s(filename, lines):
+    ensure_dir(filename)
     with open(filename, "w") as f:
         for line in lines:
             f.write(line)
 
+
+def ensure_dir(file_path):
+    directory = os.path.dirname(file_path)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
