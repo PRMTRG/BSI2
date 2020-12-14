@@ -6,7 +6,7 @@ Igor Motowidło
 import os
 
 def message_to_data(message, block_size):
-    """Converts plaintext message into encoded utf-8"""
+    """Converts a utf-8 string into a bytes object while changing the length to a multiple of the data block size"""
     while len(message) % block_size != 0:
         message += ' '
     return bytes(message, 'utf-8')

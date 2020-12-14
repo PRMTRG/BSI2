@@ -13,7 +13,7 @@ import utils
 
 def encrypt(key_file, input_file, output_file):
     """
-    :param key_file: path to the file containing encryption key
+    :param key_file: path to the file containing key
     :param input_file: path to the message file which we want to encrypt
     :param output_file: path where the encrypted file shall be saved.
     :return: nothing
@@ -34,7 +34,7 @@ def encrypt(key_file, input_file, output_file):
 
 def decrypt(key_file, input_file, output_file):
     """
-    :param key_file: path to the file containing decryption key
+    :param key_file: path to the file containing key
     :param input_file: path to the file which we want to decrypt
     :param output_file: path where the decrypted file shall be saved.
     :return: nothing

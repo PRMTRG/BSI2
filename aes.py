@@ -14,7 +14,7 @@ import utils
 
 def encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file):
     """
-    :param key_file: path to the file containing encryption key
+    :param key_file: path to the file containing key
     :param message_file: path to the message file which we want to encrypt
     :param nonce_file: path to (bytes, bytearray, memoryview) file
     :param ciphertext_file: path where the encrypted file shall be saved.
@@ -35,7 +35,7 @@ def encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file):
 
 def decrypt(key_file, nonce_file, ciphertext_file, tag_file, output_file):
     """
-    :param key_file: path to the file containing decryption key
+    :param key_file: path to the file containing key
     :param nonce_file: path to (bytes, bytearray, memoryview) file
     :param ciphertext_file: path to the file which we want to decrypt
     :param tag_file: path to message authentication code file
