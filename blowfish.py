@@ -1,8 +1,24 @@
+"""
+Simple example of encryption/decryption using blowfish algorithm
+
+Source:
+https://pycryptodome.readthedocs.io/en/latest/src/cipher/blowfish.html
+
+Author:
+Tymoteusz Mirski
+"""
+
 from Crypto.Cipher import Blowfish
 import utils
 
 
 def encrypt(key_file, message_file, ciphertext_file):
+    """
+    :param key_file: path to the file containing encryption key
+    :param message_file: path to the message file which we want to encrypt
+    :param ciphertext_file: path where the encrypted file shall be saved.
+    :return: nothing
+    """
     block_size = Blowfish.block_size
     key = utils.read_file_b(key_file)
     message = utils.read_file_s(message_file)
@@ -13,6 +29,12 @@ def encrypt(key_file, message_file, ciphertext_file):
 
 
 def decrypt(key_file, ciphertext_file, output_file):
+    """
+    :param key_file: path to the file containing decryption key
+    :param ciphertext_file: path to the file which we want to decrypt
+    :param output_file: path where the decrypted file shall be saved.
+    :return: nothing
+    """
     bs = Blowfish.block_size
     key = utils.read_file_b(key_file)
     ciphertext = utils.read_file_b(ciphertext_file)

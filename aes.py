@@ -1,8 +1,26 @@
+"""
+Simple example of encryption/decryption using AES algorithm
+
+Source:
+https://pycryptodome.readthedocs.io/en/latest/src/cipher/aes.html
+
+Author:
+Tymoteusz Mirski
+"""
+
 from Crypto.Cipher import AES
 import utils
 
 
 def encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file):
+    """
+    :param key_file: path to the file containing encryption key
+    :param message_file: path to the message file which we want to encrypt
+    :param nonce_file:
+    :param ciphertext_file: path where the encrypted file shall be saved.
+    :param tag_file:
+    :return: nothing
+    """
     block_size = 16
     key = utils.read_file_b(key_file)
     message = utils.read_file_s(message_file)
@@ -16,6 +34,14 @@ def encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file):
 
 
 def decrypt(key_file, nonce_file, ciphertext_file, tag_file, output_file):
+    """
+    :param key_file: path to the file containing decryption key
+    :param nonce_file:
+    :param ciphertext_file: path to the file which we want to decrypt
+    :param tag_file:
+    :param output_file: path where the decrypted file shall be saved.
+    :return: nothing
+    """
     key = utils.read_file_b(key_file)
     nonce = utils.read_file_b(nonce_file)
     ciphertext = utils.read_file_b(ciphertext_file)
