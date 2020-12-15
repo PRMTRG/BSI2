@@ -1,55 +1,78 @@
 import aes
 import blowfish
 import triple_des
+import sys
+
 
 if __name__ == "__main__":
 
     while True:
-        algorithm = input("Choose the algorithm to use: ")
-        print("1. AES")
-        print("2. Blowfish")
-        print("3. Triple DES")
+        while True:
+            print()
+            print("Choose the algorithm to use")
+            print("1. AES")
+            print("2. Blowfish")
+            print("3. Triple DES")
+            print("4. exit program")
+            algorithm = input()
+            if algorithm not in ("1", "2", "3", "4"):
+                print("\nInvalid option!\n")
+            elif algorithm == "4":
+                print("Goodbye")
+                sys.exit()
+            else:
+                break
 
-        action = input("Select action to perform: ")
-        print("1. Encrypt")
-        print("2. Dedrypt")
+        while True:
+            print("Select the action to perform")
+            print("1. encrypt")
+            print("2. decrypt")
+            print("3. go back")
+            action = input()
+            if action not in ("1", "2", "3"):
+                print("\nInvalid option!\n")
+            elif action == "3":
+                algorithm = "0"
+                print()
+                break
+            else:
+                break
+            
+        if algorithm == "1":
+            if action == "1":
+                key_file = input("Path to the (input) key file: ")
+                message_file = input("Path to the (input) message file: ")
+                nonce_file = input("Path to the (output) nonce file: ")
+                tag_file = input("Path to the (output) tag file: ")
+                ciphertext_file = input("Path to the (output) ciphertext file: ")
+                aes.encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file)
+            elif action == "2":
+                key_file = input("Path to the (input) key file: ")
+                nonce_file = input("Path to the (input) nonce file: ")
+                tag_file = input("Path to the (input) tag file: ")
+                ciphertext_file = input("Path to the (input) ciphertext file: ")
+                output_file = input("Path to the (output) decrypted message file: ")
+                aes.decrypt(key_file, nonce_file, ciphertext_file, tag_file, output_file)
+        elif algorithm == "2":
+            if action == "1":
+                key_file = input("Path to the (input) key file: ")
+                message_file = input("Path to the (input) message file: ")
+                ciphertext_file = input("Path to the (output) ciphertext file: ")
+                blowfish.encrypt(key_file, message_file, ciphertext_file)
+            elif action == "2":
+                key_file = input("Path to the (input) key file: ")
+                ciphertext_file = input("Path to the (input) ciphertext file: ")
+                output_file = input("Path to the (output) decrypted message file: ")
+                blowfish.decrypt(key_file, ciphertext_file, output_file)
+        elif algorithm == "3":
+            if action == "1":
+                key_file = input("Path to the (input) key file: ")
+                message_file = input("Path to the (input) message file: ")
+                ciphertext_file = input("Path to the (output) ciphertext file: ")
+                triple_des.encrypt(key_file, message_file, output_file)
+            elif action == "2":
+                key_file = input("Path to the (input) key file: ")
+                ciphertext_file = input("Path to the (input) ciphertext file: ")
+                output_file = input("Path to the (output) decrypted message file: ")
+                triple_des.decrypt(key_file, message_file, output_file)
 
-        if algorithm == 1:
-            if action == 1:
-                key = input("Path to the key file: ")
-                message = input("Path to the message file: ")
-                nonce = input("Path to the nonce file: ")
-                tag_file = input("Path to the tag file: ")
-                destination = input("Path to the destination file")
-                aes.encrypt(key,message,nonce,destination,tag_file)
-            if action == 2:
-                key = input("Path to the key file: ")
-                message = input("Path to the encrypted file: ")
-                nonce = input("Path to the nonce file: ")
-                tag_file = input("Path to the tag file: ")
-                destination = input("Path to the destination file")
-                aes.decrypt(key,message,nonce,destination,tag_file)
-        elif algorithm == 2:
-            if action == 1:
-                key = input("Path to the key file: ")
-                message = input("Path to the message file: ")
-                destination = input("Path to the destination file")
-                blowfish.encrypt(key, message, destination)
-            if action == 2:
-                key = input("Path to the key file: ")
-                message = input("Path to the encrypted file: ")
-                destination = input("Path to the destination file")
-                blowfish.decrypt(key, message, destination)
-        elif algorithm == 3:
-            if action == 1:
-                key = input("Path to the key file: ")
-                message = input("Path to the message file: ")
-                destination = input("Path to the destination file")
-                triple_des.encrypt(key, message, destination)
-            if action == 2:
-                key = input("Path to the key file: ")
-                message = input("Path to the encrypted file: ")
-                destination = input("Path to the destination file")
-                triple_des.decrypt(key, message, destination)
-        elif algorithm > 3:
-            break
