@@ -42,10 +42,10 @@ class InputHelper:
         return [ self.result[key] for key in keys ]
 
 
-def take_inputs_and_run(argorithm_function, inputs):
+def take_inputs_and_run(algorithm_function, inputs):
     arguments = input_helper.get_input(inputs)
     try:
-        argorithm_function(*arguments)
+        algorithm_function(*arguments)
     except Exception as e:
         print(e)
         while True:
@@ -53,7 +53,7 @@ def take_inputs_and_run(argorithm_function, inputs):
             print("Leave input empty to use previously entered value.")
             arguments = input_helper.retry()
             try:
-                argorithm_function(*arguments)
+                algorithm_function(*arguments)
                 break
             except Exception as e:
                 print(e)
