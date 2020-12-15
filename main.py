@@ -4,6 +4,61 @@ import triple_des
 import sys
 
 
+prompts = {
+    "key_in": "Path to the (input) key file: ",
+    "message_in": "Path to the (input) message file: ",
+    "message_out": "Path to the (output) decrypted message file: ",
+    "nonce_in": "Path to the (input) nonce file: ",
+    "nonce_out": "Path to the (output) nonce file: ",
+    "tag_in": "Path to the (input) tag file: ",
+    "tag_out": "Path to the (output) tag file: ",
+    "ciphertext_in": "Path to the (input) ciphertext file: ",
+    "ciphertext_out": "Path to the (output) ciphertext file: "
+    }
+
+
+class InputHelper:
+    def __init__(self):
+        pass
+    def get_input(self, keys):
+        self.result = {}
+        for key in keys:
+            self.result[key] = input(prompts[key])
+        return [ self.result[key] for key in keys ]
+    def retry(self):
+        keys = self.result.keys()
+        for key in keys:
+            while True:
+                val = input(prompts[key])
+                if val == "":
+                    try:
+                        if self.result[key] != "":
+                            break
+                    except:
+                        pass
+                else:
+                    self.result[key] = val
+                    break
+        return [ self.result[key] for key in keys ]
+
+
+def take_inputs_and_run(argorithm_function, inputs):
+    arguments = input_helper.get_input(inputs)
+    try:
+        argorithm_function(*arguments)
+    except Exception as e:
+        print(e)
+        while True:
+            print("Something went wrong. Reenter the filenames and try again.")
+            print("Leave input empty to use previously entered value.")
+            arguments = input_helper.retry()
+            try:
+                argorithm_function(*arguments)
+                break
+            except Exception as e:
+                print(e)
+
+
 if __name__ == "__main__":
 
     while True:
@@ -37,42 +92,28 @@ if __name__ == "__main__":
                 break
             else:
                 break
-            
+
+        input_helper = InputHelper()
+
         if algorithm == "1":
             if action == "1":
-                key_file = input("Path to the (input) key file: ")
-                message_file = input("Path to the (input) message file: ")
-                nonce_file = input("Path to the (output) nonce file: ")
-                tag_file = input("Path to the (output) tag file: ")
-                ciphertext_file = input("Path to the (output) ciphertext file: ")
-                aes.encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file)
+                inputs = [ "key_in", "message_in", "nonce_out", "tag_out", "ciphertext_out" ]
+                take_inputs_and_run(aes.encrypt, inputs)
             elif action == "2":
-                key_file = input("Path to the (input) key file: ")
-                nonce_file = input("Path to the (input) nonce file: ")
-                tag_file = input("Path to the (input) tag file: ")
-                ciphertext_file = input("Path to the (input) ciphertext file: ")
-                output_file = input("Path to the (output) decrypted message file: ")
-                aes.decrypt(key_file, nonce_file, ciphertext_file, tag_file, output_file)
+                inputs = [ "key_in", "nonce_in", "tag_in", "ciphertext_in", "message_out" ]
+                take_inputs_and_run(aes.decrypt, inputs)
         elif algorithm == "2":
             if action == "1":
-                key_file = input("Path to the (input) key file: ")
-                message_file = input("Path to the (input) message file: ")
-                ciphertext_file = input("Path to the (output) ciphertext file: ")
-                blowfish.encrypt(key_file, message_file, ciphertext_file)
+                inputs = [ "key_in", "message_in", "ciphertext_out" ]
+                take_inputs_and_run(blowfish.encrypt, inputs)
             elif action == "2":
-                key_file = input("Path to the (input) key file: ")
-                ciphertext_file = input("Path to the (input) ciphertext file: ")
-                output_file = input("Path to the (output) decrypted message file: ")
-                blowfish.decrypt(key_file, ciphertext_file, output_file)
+                inputs = [ "key_in", "ciphertext_in", "message_out" ]
+                take_inputs_and_run(blowfish.decrypt, inputs)
         elif algorithm == "3":
             if action == "1":
-                key_file = input("Path to the (input) key file: ")
-                message_file = input("Path to the (input) message file: ")
-                ciphertext_file = input("Path to the (output) ciphertext file: ")
-                triple_des.encrypt(key_file, message_file, output_file)
+                inputs = [ "key_in", "message_in", "ciphertext_out" ]
+                take_inputs_and_run(triple_des.encrypt, inputs)
             elif action == "2":
-                key_file = input("Path to the (input) key file: ")
-                ciphertext_file = input("Path to the (input) ciphertext file: ")
-                output_file = input("Path to the (output) decrypted message file: ")
-                triple_des.decrypt(key_file, message_file, output_file)
+                inputs = [ "key_in", "ciphertext_in", "message_out" ]
+                take_inputs_and_run(triple_des.decrypt, inputs)
 
