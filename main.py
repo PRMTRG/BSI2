@@ -1,10 +1,12 @@
 import aes
 import blowfish
 import triple_des
+import rsa
+import ecc
 import sys
 
 
-prompts = {
+PROMPTS = {
     "key_in": "Path to the (input) key file: ",
     "message_in": "Path to the (input) message file: ",
     "message_out": "Path to the (output) decrypted message file: ",
@@ -13,7 +15,11 @@ prompts = {
     "tag_in": "Path to the (input) tag file: ",
     "tag_out": "Path to the (output) tag file: ",
     "ciphertext_in": "Path to the (input) ciphertext file: ",
-    "ciphertext_out": "Path to the (output) ciphertext file: "
+    "ciphertext_out": "Path to the (output) ciphertext file: ",
+    "private_key_in": "Path to the (input) private key file: ",
+    "private_key_out": "Path to the (output) private key file: ",
+    "public_key_in": "Path to the (input) public key file: ",
+    "public_key_out": "Path to the (output) public key file: ",
     }
 
 
@@ -23,13 +29,13 @@ class InputHelper:
     def get_input(self, keys):
         self.result = {}
         for key in keys:
-            self.result[key] = input(prompts[key])
+            self.result[key] = input(PROMPTS[key])
         return [ self.result[key] for key in keys ]
     def retry(self):
         keys = self.result.keys()
         for key in keys:
             while True:
-                val = input(prompts[key])
+                val = input(PROMPTS[key])
                 if val == "":
                     try:
                         if self.result[key] != "":
@@ -42,12 +48,14 @@ class InputHelper:
         return [ self.result[key] for key in keys ]
 
 
-def take_inputs_and_run(algorithm_function, inputs):
+def take_inputs_and_run(input_helper, algorithm_function, inputs):
     arguments = input_helper.get_input(inputs)
     try:
         algorithm_function(*arguments)
     except Exception as e:
+        print()
         print(e)
+        print()
         while True:
             print("Something went wrong. Reenter the filenames and try again.")
             print("Leave input empty to use previously entered value.")
@@ -56,11 +64,27 @@ def take_inputs_and_run(algorithm_function, inputs):
                 algorithm_function(*arguments)
                 break
             except Exception as e:
+                print()
                 print(e)
+                print()
 
 
-if __name__ == "__main__":
+def select_action(actions):
+    available_choices = [ f'{i}' for i in range(1, len(actions) + 2) ]
+    while True:
+        print("Select the action to perform")
+        for i in range(len(available_choices) - 1):
+            print(f'{available_choices[i]}. {actions[i]}')
+        print(f'{available_choices[-1]}. go back')
+        action = input()
+        if action not in available_choices:
+            print("\nInvalid option!\n")
+        else:
+            break
+    return action
 
+
+def main():
     while True:
         while True:
             print()
@@ -68,52 +92,55 @@ if __name__ == "__main__":
             print("1. AES")
             print("2. Blowfish")
             print("3. Triple DES")
-            print("4. exit program")
+            print("4. RSA")
+            print("5. exit program")
             algorithm = input()
-            if algorithm not in ("1", "2", "3", "4"):
+            if algorithm not in ("1", "2", "3", "4", "5"):
                 print("\nInvalid option!\n")
-            elif algorithm == "4":
+            elif algorithm == "5":
                 print("Goodbye")
                 sys.exit()
-            else:
-                break
-
-        while True:
-            print("Select the action to perform")
-            print("1. encrypt")
-            print("2. decrypt")
-            print("3. go back")
-            action = input()
-            if action not in ("1", "2", "3"):
-                print("\nInvalid option!\n")
-            elif action == "3":
-                algorithm = "0"
-                print()
-                break
             else:
                 break
 
         input_helper = InputHelper()
 
         if algorithm == "1":
+            action = select_action([ "encrypt", "decrypt" ])
             if action == "1":
                 inputs = [ "key_in", "message_in", "nonce_out", "tag_out", "ciphertext_out" ]
-                take_inputs_and_run(aes.encrypt, inputs)
+                take_inputs_and_run(input_helper, aes.encrypt, inputs)
             elif action == "2":
                 inputs = [ "key_in", "nonce_in", "tag_in", "ciphertext_in", "message_out" ]
-                take_inputs_and_run(aes.decrypt, inputs)
+                take_inputs_and_run(input_helper, aes.decrypt, inputs)
         elif algorithm == "2":
+            action = select_action([ "encrypt", "decrypt" ])
             if action == "1":
                 inputs = [ "key_in", "message_in", "ciphertext_out" ]
-                take_inputs_and_run(blowfish.encrypt, inputs)
+                take_inputs_and_run(input_helper, blowfish.encrypt, inputs)
             elif action == "2":
                 inputs = [ "key_in", "ciphertext_in", "message_out" ]
-                take_inputs_and_run(blowfish.decrypt, inputs)
+                take_inputs_and_run(input_helper, blowfish.decrypt, inputs)
         elif algorithm == "3":
+            action = select_action([ "encrypt", "decrypt" ])
             if action == "1":
                 inputs = [ "key_in", "message_in", "ciphertext_out" ]
-                take_inputs_and_run(triple_des.encrypt, inputs)
+                take_inputs_and_run(input_helper, triple_des.encrypt, inputs)
             elif action == "2":
                 inputs = [ "key_in", "ciphertext_in", "message_out" ]
-                take_inputs_and_run(triple_des.decrypt, inputs)
+                take_inputs_and_run(input_helper, triple_des.decrypt, inputs)
+        elif algorithm == "4":
+            action = select_action([ "generate_keys", "encrypt", "decrypt" ])
+            if action == "1":
+                inputs = [ "private_key_out", "public_key_out" ]
+                take_inputs_and_run(input_helper, rsa.generate_keys, inputs)
+            elif action == "2":
+                inputs = [ "public_key_in", "message_in", "ciphertext_out" ]
+                take_inputs_and_run(input_helper, rsa.encrypt, inputs)
+            elif action == "3":
+                inputs = [ "private_key_in", "ciphertext_in", "message_out" ]
+                take_inputs_and_run(input_helper, rsa.decrypt, inputs)
 
+
+if __name__ == "__main__":
+    main()
