@@ -93,11 +93,12 @@ def main():
             print("2. Blowfish")
             print("3. Triple DES")
             print("4. RSA")
-            print("5. exit program")
+            print("5. ECIES")
+            print("6. exit program")
             algorithm = input()
-            if algorithm not in ("1", "2", "3", "4", "5"):
+            if algorithm not in ("1", "2", "3", "4", "5", "6"):
                 print("\nInvalid option!\n")
-            elif algorithm == "5":
+            elif algorithm == "6":
                 print("Goodbye")
                 sys.exit()
             else:
@@ -140,7 +141,18 @@ def main():
             elif action == "3":
                 inputs = [ "private_key_in", "ciphertext_in", "message_out" ]
                 take_inputs_and_run(input_helper, rsa.decrypt, inputs)
-
+        elif algorithm == "5":
+            action = select_action([ "generate_keys", "encrypt", "decrypt" ])
+            if action == "1":
+                inputs = [ "private_key_out", "public_key_out" ]
+                take_inputs_and_run(input_helper, ecc.generate_keys, inputs)
+            elif action == "2":
+                inputs = [ "public_key_in", "message_in", "ciphertext_out" ]
+                take_inputs_and_run(input_helper, ecc.encrypt, inputs)
+            elif action == "3":
+                inputs = [ "private_key_in", "ciphertext_in", "message_out" ]
+                take_inputs_and_run(input_helper, ecc.decrypt, inputs)
+                
 
 if __name__ == "__main__":
     main()

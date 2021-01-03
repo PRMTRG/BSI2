@@ -42,11 +42,11 @@ def decrypt(private_key_file, input_file, output_file):
 if __name__ == "__main__":
     private_key_file = "rsa/private.pem"
     public_key_file = "rsa/public.pem"
-    message_file = "input/message.txt"
-    ciphertext_file = "output/ciphertext.txt"
-    output_file = "output/result.txt"
+    input_data_file = "input/message.txt"
+    encrypted_data_file = "output/encrypted_data.txt"
+    decrypted_data_file = "output/decrypted_data.txt"
     
     generate_keys(private_key_file, public_key_file)
-    encrypt(public_key_file, message_file, ciphertext_file)
-    decrypt(private_key_file, ciphertext_file, output_file)
+    encrypt(public_key_file, input_data_file, encrypted_data_file)
+    decrypt(private_key_file, encrypted_data_file, decrypted_data_file)
     
