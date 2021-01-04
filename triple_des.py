@@ -10,6 +10,8 @@ Igor Motowidło,
 
 from Crypto.Cipher import DES3
 import utils
+import time
+
 
 def encrypt(key_file, input_file, output_file):
     """
@@ -49,11 +51,35 @@ def decrypt(key_file, input_file, output_file):
     utils.write_to_file_s(output_file, plaintext.decode('utf-8'))
 
 
-if __name__ == "__main__":
+def test_time():
     key_file = "input/3des_key.txt"
     message_file = "input/message.txt"
     output_file1 = "output/3des_ciphertext.txt"
     output_file2 = "output/3des_output.txt"
-
+    encrypt_start = time.perf_counter()
     encrypt(key_file, message_file, output_file1)
-    decrypt(key_file, output_file1, output_file2)
+    encrypt_time = time.perf_counter() - encrypt_start
+    decrypt_start = time.perf_counter()
+    decrypt(key_file, output_file1, output_file2)    
+    decrypt_time = time.perf_counter() - decrypt_start
+    print("=== DES3 ===")
+    print("Encrypt data:", encrypt_time)
+    print("Decrypt data:", decrypt_time)
+    print()
+
+
+def main():
+    key_file = "input/3des_key.txt"
+    message_file = "input/message.txt"
+    output_file1 = "output/3des_ciphertext.txt"
+    output_file2 = "output/3des_output.txt"
+    encrypt(key_file, message_file, output_file1)
+    decrypt(key_file, output_file1, output_file2)  
+
+
+if __name__ == "__main__":
+    main()
+    
+    
+    
+    

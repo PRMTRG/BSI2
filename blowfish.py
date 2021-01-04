@@ -10,6 +10,7 @@ Tymoteusz Mirski
 
 from Crypto.Cipher import Blowfish
 import utils
+import time
 
 
 def encrypt(key_file, message_file, ciphertext_file):
@@ -45,12 +46,36 @@ def decrypt(key_file, ciphertext_file, output_file):
     utils.write_to_file_s(output_file, plaintext.decode('utf-8'))
 
 
-if __name__ == "__main__":
+def test_time():
     key_file = "input/blowfish_key.txt"
     message_file = "input/message.txt"
     ciphertext_file = "output/blowfish_ciphertext.txt"
     output_file = "output/blowfish_output.txt"
-    
+    encrypt_start = time.perf_counter()
+    encrypt(key_file, message_file, ciphertext_file)
+    encrypt_time = time.perf_counter() - encrypt_start
+    decrypt_start = time.perf_counter()
+    decrypt(key_file, ciphertext_file, output_file)
+    decrypt_time = time.perf_counter() - decrypt_start
+    print("=== Blowfish ===")
+    print("Encrypt data:", encrypt_time)
+    print("Decrypt data:", decrypt_time)
+    print()
+
+
+def main():
+    key_file = "input/blowfish_key.txt"
+    message_file = "input/message.txt"
+    ciphertext_file = "output/blowfish_ciphertext.txt"
+    output_file = "output/blowfish_output.txt"
     encrypt(key_file, message_file, ciphertext_file)
     decrypt(key_file, ciphertext_file, output_file)
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
 

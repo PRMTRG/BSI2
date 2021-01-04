@@ -2,6 +2,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 from Crypto.Cipher import AES, PKCS1_OAEP
 import utils
+import time
 
 
 def generate_keys(private_key_file, public_key_file):
@@ -39,14 +40,39 @@ def decrypt(private_key_file, input_file, output_file):
     utils.write_to_file_s(output_file, plaintext.decode('utf-8'))
     
 
-if __name__ == "__main__":
+def test_time():
     private_key_file = "rsa/private.pem"
     public_key_file = "rsa/public.pem"
     input_data_file = "input/message.txt"
-    encrypted_data_file = "output/encrypted_data.txt"
-    decrypted_data_file = "output/decrypted_data.txt"
-    
+    encrypted_data_file = "output/rsa_encrypted_data.txt"
+    decrypted_data_file = "output/rsa_decrypted_data.txt"
+    gen_keys_start = time.perf_counter()
+    generate_keys(private_key_file, public_key_file)
+    gen_keys_time = time.perf_counter() - gen_keys_start
+    encrypt_start = time.perf_counter()
+    encrypt(public_key_file, input_data_file, encrypted_data_file)
+    encrypt_time = time.perf_counter() - encrypt_start
+    decrypt_start = time.perf_counter()
+    decrypt(private_key_file, encrypted_data_file, decrypted_data_file)
+    decrypt_time = time.perf_counter() - decrypt_start
+    print("=== RSA ===")
+    print("Generate keys:", gen_keys_time)
+    print("Encrypt data:", encrypt_time)
+    print("Decrypt data:", decrypt_time)
+    print()   
+
+
+def main():
+    private_key_file = "rsa/private.pem"
+    public_key_file = "rsa/public.pem"
+    input_data_file = "input/message.txt"
+    encrypted_data_file = "output/rsa_encrypted_data.txt"
+    decrypted_data_file = "output/rsa_decrypted_data.txt"
     generate_keys(private_key_file, public_key_file)
     encrypt(public_key_file, input_data_file, encrypted_data_file)
     decrypt(private_key_file, encrypted_data_file, decrypted_data_file)
+
+
+if __name__ == "__main__":
+    main()
     

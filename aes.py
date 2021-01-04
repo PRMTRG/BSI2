@@ -10,6 +10,7 @@ Tymoteusz Mirski
 
 from Crypto.Cipher import AES
 import utils
+import time
 
 
 def encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file):
@@ -55,14 +56,43 @@ def decrypt(key_file, nonce_file, ciphertext_file, tag_file, output_file):
     utils.write_to_file_s(output_file, plaintext.decode('utf-8'))
 
 
-if __name__ == "__main__":
+def test_time():
     key_file = "input/aes_key.txt"
     message_file = "input/message.txt"
     nonce_file = "output/aes_nonce.txt"
     ciphertext_file = "output/aes_ciphertext.txt"
     tag_file = "output/aes_tag.txt"
     output_file = "output/aes_output.txt"
-    
+    encrypt_start = time.perf_counter()
+    encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file)
+    encrypt_time = time.perf_counter() - encrypt_start
+    decrypt_start = time.perf_counter()
+    decrypt(key_file, nonce_file, ciphertext_file, tag_file, output_file)    
+    decrypt_time = time.perf_counter() - decrypt_start
+    print("=== AES ===")
+    print("Encrypt data:", encrypt_time)
+    print("Decrypt data:", decrypt_time)
+    print()
+
+
+def main():
+    key_file = "input/aes_key.txt"
+    message_file = "input/message.txt"
+    nonce_file = "output/aes_nonce.txt"
+    ciphertext_file = "output/aes_ciphertext.txt"
+    tag_file = "output/aes_tag.txt"
+    output_file = "output/aes_output.txt"
     encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file)
     decrypt(key_file, nonce_file, ciphertext_file, tag_file, output_file)
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
 

@@ -88,17 +88,18 @@ def main():
     while True:
         while True:
             print()
-            print("Choose the algorithm to use")
+            print("Choose the algorithm or action")
             print("1. AES")
             print("2. Blowfish")
             print("3. Triple DES")
             print("4. RSA")
             print("5. ECIES")
-            print("6. exit program")
-            algorithm = input()
-            if algorithm not in ("1", "2", "3", "4", "5", "6"):
+            print("6. test execution times of algorithms")
+            print("7. exit program")
+            choice = input()
+            if choice not in ("1", "2", "3", "4", "5", "6", "7"):
                 print("\nInvalid option!\n")
-            elif algorithm == "6":
+            elif choice == "7":
                 print("Goodbye")
                 sys.exit()
             else:
@@ -106,7 +107,7 @@ def main():
 
         input_helper = InputHelper()
 
-        if algorithm == "1":
+        if choice == "1":
             action = select_action([ "encrypt", "decrypt" ])
             if action == "1":
                 inputs = [ "key_in", "message_in", "nonce_out", "tag_out", "ciphertext_out" ]
@@ -114,7 +115,7 @@ def main():
             elif action == "2":
                 inputs = [ "key_in", "nonce_in", "tag_in", "ciphertext_in", "message_out" ]
                 take_inputs_and_run(input_helper, aes.decrypt, inputs)
-        elif algorithm == "2":
+        elif choice == "2":
             action = select_action([ "encrypt", "decrypt" ])
             if action == "1":
                 inputs = [ "key_in", "message_in", "ciphertext_out" ]
@@ -122,7 +123,7 @@ def main():
             elif action == "2":
                 inputs = [ "key_in", "ciphertext_in", "message_out" ]
                 take_inputs_and_run(input_helper, blowfish.decrypt, inputs)
-        elif algorithm == "3":
+        elif choice == "3":
             action = select_action([ "encrypt", "decrypt" ])
             if action == "1":
                 inputs = [ "key_in", "message_in", "ciphertext_out" ]
@@ -130,7 +131,7 @@ def main():
             elif action == "2":
                 inputs = [ "key_in", "ciphertext_in", "message_out" ]
                 take_inputs_and_run(input_helper, triple_des.decrypt, inputs)
-        elif algorithm == "4":
+        elif choice == "4":
             action = select_action([ "generate_keys", "encrypt", "decrypt" ])
             if action == "1":
                 inputs = [ "private_key_out", "public_key_out" ]
@@ -141,7 +142,7 @@ def main():
             elif action == "3":
                 inputs = [ "private_key_in", "ciphertext_in", "message_out" ]
                 take_inputs_and_run(input_helper, rsa.decrypt, inputs)
-        elif algorithm == "5":
+        elif choice == "5":
             action = select_action([ "generate_keys", "encrypt", "decrypt" ])
             if action == "1":
                 inputs = [ "private_key_out", "public_key_out" ]
@@ -152,7 +153,13 @@ def main():
             elif action == "3":
                 inputs = [ "private_key_in", "ciphertext_in", "message_out" ]
                 take_inputs_and_run(input_helper, ecc.decrypt, inputs)
-                
+        elif choice == "6":
+            aes.test_time()
+            blowfish.test_time()
+            triple_des.test_time()
+            rsa.test_time()
+            ecc.test_time()
+            
 
 if __name__ == "__main__":
     main()
