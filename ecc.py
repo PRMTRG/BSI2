@@ -1,9 +1,33 @@
+"""
+Algorithm source:
+https://github.com/ecies/py
+
+Author:
+Tymoteusz Mirski
+"""
+
+
 import ecies
 import utils
 import time
 
 
 def generate_keys(private_key_file, public_key_file):
+    """
+    Generate ECIES private and public keys and save them to files.
+
+    Parameters
+    ----------
+    private_key_file : string
+        Path to the output file where the private key is to be saved.
+    public_key_file : string
+        Path to the output file where the public key is to be saved.
+
+    Returns
+    -------
+    None.
+
+    """
     eth_k = ecies.utils.generate_eth_key()
     private_key = eth_k.to_hex()
     public_key = eth_k.public_key.to_hex()
@@ -12,6 +36,23 @@ def generate_keys(private_key_file, public_key_file):
 
 
 def encrypt(public_key_file, input_data_file, encrypted_data_file):
+    """
+    Encrypt a file using the ECIES public key.
+
+    Parameters
+    ----------
+    public_key_file : string
+        Path to the file containing the ECIES public key.
+    input_file : string
+        Path to the file which contents are to be encrypted.
+    output_file : string
+        Path to the output file containing encrypted contents.
+
+    Returns
+    -------
+    None.
+
+    """
     public_key = open(public_key_file).read()
     data = utils.read_file_s(input_data_file).encode("utf-8")
     encrypted_data = ecies.encrypt(public_key, data)
@@ -19,6 +60,23 @@ def encrypt(public_key_file, input_data_file, encrypted_data_file):
 
 
 def decrypt(private_key_file, encrypted_data_file, output_file):
+    """
+    Decrypt a file using the ECIES private key.
+
+    Parameters
+    ----------
+    private_key_file : string
+        Path to the file containing the ECIES private key..
+    input_file : string
+        Path to the file which contents are to be decrypted.
+    output_file : string
+        Path to the output file containing decrypted contents.
+
+    Returns
+    -------
+    None.
+
+    """
     private_key = open(private_key_file).read()
     encrypted_data = utils.read_file_b(encrypted_data_file)
     plaintext = ecies.decrypt(private_key, encrypted_data)
@@ -26,6 +84,7 @@ def decrypt(private_key_file, encrypted_data_file, output_file):
 
 
 def test_time():
+    """Print execution times for key generation, encryption and decryption with ECIES."""
     private_key_file = "ecc/private.txt"
     public_key_file = "ecc/public.txt"
     input_data_file = "input/message.txt"
@@ -48,6 +107,7 @@ def test_time():
 
 
 def main():
+    """Example of key generation, encryption and decryption with ECIES."""
     private_key_file = "ecc/private.txt"
     public_key_file = "ecc/public.txt"
     input_data_file = "input/message.txt"

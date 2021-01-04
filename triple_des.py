@@ -4,9 +4,11 @@ Simple example of encryption/decryption using triple des algorithm
 Source:
 https://pycryptodome.readthedocs.io/en/latest/src/cipher/des3.html
 
-Author:
+Authors:
 Igor Motowidło,
+Tymoteusz Mirski
 """
+
 
 from Crypto.Cipher import DES3
 import utils
@@ -15,6 +17,8 @@ import time
 
 def encrypt(key_file, input_file, output_file):
     """
+    Encrypt a file using DES3.
+    
     :param key_file: path to the file containing key
     :param input_file: path to the message file which we want to encrypt
     :param output_file: path where the encrypted file shall be saved.
@@ -36,6 +40,8 @@ def encrypt(key_file, input_file, output_file):
 
 def decrypt(key_file, input_file, output_file):
     """
+    Decrypt a file using DES3.
+    
     :param key_file: path to the file containing key
     :param input_file: path to the file which we want to decrypt
     :param output_file: path where the decrypted file shall be saved.
@@ -52,6 +58,7 @@ def decrypt(key_file, input_file, output_file):
 
 
 def test_time():
+    """Print execution times for encryption and decryption with DES3."""
     key_file = "input/3des_key.txt"
     message_file = "input/message.txt"
     output_file1 = "output/3des_ciphertext.txt"
@@ -69,6 +76,7 @@ def test_time():
 
 
 def main():
+    """Example of encryption and decryption with DES3."""
     key_file = "input/3des_key.txt"
     message_file = "input/message.txt"
     output_file1 = "output/3des_ciphertext.txt"

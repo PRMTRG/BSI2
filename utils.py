@@ -3,7 +3,10 @@ Authors:
 Tymoteusz Mirski,
 Igor Motowidło
 """
+
+
 import os
+
 
 def message_to_data(message, block_size):
     """Converts a utf-8 string into a bytes object while changing the length to a multiple of the data block size"""

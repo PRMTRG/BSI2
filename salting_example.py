@@ -1,3 +1,9 @@
+"""
+Author:
+Tymoteusz Mirski
+"""
+
+
 from tinydb import TinyDB, Query
 import random
 import string
@@ -5,16 +11,19 @@ import hashlib
 
 
 def generate_salt():
+    """Returns a string of random digits and uppercase characters."""
     salt_length = 16
     return ''.join(random.choice(string.ascii_uppercase + string.digits)
                    for _ in range(salt_length))
 
 
 def hash_password(password, salt):
+    """Returns an MD5 hash of the password + salt."""
     return hashlib.md5((password + salt).encode()).hexdigest()
 
 
 def register(username, password):
+    """Adds a user to the database. Hashes the provided password."""
     salt = generate_salt()
     hashed_password = hash_password(password, salt)
     with TinyDB('db.json') as db:
@@ -22,6 +31,7 @@ def register(username, password):
 
 
 def log_in(username, password):
+    """Returns True if the given credentials are in the database."""
     user = Query()
     with TinyDB('db.json') as db:
         res = db.search(user.username == username)

@@ -1,3 +1,10 @@
+"""
+Authors:
+Tymoteusz Mirski,
+Igor Motowidło
+"""
+
+
 import aes
 import blowfish
 import triple_des

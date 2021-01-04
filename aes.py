@@ -8,6 +8,7 @@ Author:
 Tymoteusz Mirski
 """
 
+
 from Crypto.Cipher import AES
 import utils
 import time
@@ -15,6 +16,8 @@ import time
 
 def encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file):
     """
+    Encrypt a file using AES.
+    
     :param key_file: path to the file containing key
     :param message_file: path to the message file which we want to encrypt
     :param nonce_file: path to (bytes, bytearray, memoryview) file
@@ -36,6 +39,8 @@ def encrypt(key_file, message_file, nonce_file, ciphertext_file, tag_file):
 
 def decrypt(key_file, nonce_file, ciphertext_file, tag_file, output_file):
     """
+    Decrypt a file using AES.
+    
     :param key_file: path to the file containing key
     :param nonce_file: path to (bytes, bytearray, memoryview) file
     :param ciphertext_file: path to the file which we want to decrypt
@@ -57,6 +62,7 @@ def decrypt(key_file, nonce_file, ciphertext_file, tag_file, output_file):
 
 
 def test_time():
+    """Print execution times for encryption and decryption with AES."""
     key_file = "input/aes_key.txt"
     message_file = "input/message.txt"
     nonce_file = "output/aes_nonce.txt"
@@ -76,6 +82,7 @@ def test_time():
 
 
 def main():
+    """Example of encryption and decryption with AES."""
     key_file = "input/aes_key.txt"
     message_file = "input/message.txt"
     nonce_file = "output/aes_nonce.txt"

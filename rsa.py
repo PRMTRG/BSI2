@@ -1,3 +1,11 @@
+"""
+Algorithm source:
+https://pycryptodome.readthedocs.io/en/latest/src/public_key/rsa.html
+
+Author:
+Tymoteusz Mirski
+"""
+
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 from Crypto.Cipher import AES, PKCS1_OAEP
@@ -6,6 +14,21 @@ import time
 
 
 def generate_keys(private_key_file, public_key_file):
+    """
+    Generate RSA private and public keys and save them to files.
+
+    Parameters
+    ----------
+    private_key_file : string
+        Path to the output file where the private key is to be saved.
+    public_key_file : string
+        Path to the output file where the public key is to be saved.
+
+    Returns
+    -------
+    None.
+
+    """
     key = RSA.generate(2048)
     private_key = key.export_key()
     public_key = key.publickey().export_key()
@@ -14,6 +37,23 @@ def generate_keys(private_key_file, public_key_file):
     
 
 def encrypt(public_key_file, input_file, output_file):
+    """
+    Encrypt a file using the RSA public key.
+
+    Parameters
+    ----------
+    public_key_file : string
+        Path to the file containing the RSA public key.
+    input_file : string
+        Path to the file which contents are to be encrypted.
+    output_file : string
+        Path to the output file containing encrypted contents.
+
+    Returns
+    -------
+    None.
+
+    """
     data = utils.read_file_s(input_file).encode("utf-8")
     recipient_key = RSA.import_key(open(public_key_file).read())
     session_key = get_random_bytes(16)
@@ -28,6 +68,23 @@ def encrypt(public_key_file, input_file, output_file):
 
 
 def decrypt(private_key_file, input_file, output_file):
+    """
+    Decrypt a file using the RSA private key.
+
+    Parameters
+    ----------
+    private_key_file : string
+        Path to the file containing the RSA private key..
+    input_file : string
+        Path to the file which contents are to be decrypted.
+    output_file : string
+        Path to the output file containing decrypted contents.
+
+    Returns
+    -------
+    None.
+
+    """
     file_in = open(input_file, "rb")
     private_key = RSA.import_key(open(private_key_file).read())
     enc_session_key, nonce, tag, ciphertext = \
@@ -41,6 +98,7 @@ def decrypt(private_key_file, input_file, output_file):
     
 
 def test_time():
+    """Print execution times for key generation, encryption and decryption with RSA."""
     private_key_file = "rsa/private.pem"
     public_key_file = "rsa/public.pem"
     input_data_file = "input/message.txt"
@@ -59,10 +117,11 @@ def test_time():
     print("Generate keys:", gen_keys_time)
     print("Encrypt data:", encrypt_time)
     print("Decrypt data:", decrypt_time)
-    print()   
+    print()
 
 
 def main():
+    """Example of key generation, encryption and decryption with RSA."""
     private_key_file = "rsa/private.pem"
     public_key_file = "rsa/public.pem"
     input_data_file = "input/message.txt"

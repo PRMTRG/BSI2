@@ -8,6 +8,7 @@ Author:
 Tymoteusz Mirski
 """
 
+
 from Crypto.Cipher import Blowfish
 import utils
 import time
@@ -15,6 +16,8 @@ import time
 
 def encrypt(key_file, message_file, ciphertext_file):
     """
+    Encrypt a file using Blowfish.
+    
     :param key_file: path to the file containing key
     :param message_file: path to the message file which we want to encrypt
     :param ciphertext_file: path where the encrypted file shall be saved.
@@ -31,6 +34,8 @@ def encrypt(key_file, message_file, ciphertext_file):
 
 def decrypt(key_file, ciphertext_file, output_file):
     """
+    Decrypt a file using Blowfish.
+    
     :param key_file: path to the file containing key
     :param ciphertext_file: path to the file which we want to decrypt
     :param output_file: path where the decrypted file shall be saved.
@@ -47,6 +52,7 @@ def decrypt(key_file, ciphertext_file, output_file):
 
 
 def test_time():
+    """Print execution times for encryption and decryption with Blowfish."""
     key_file = "input/blowfish_key.txt"
     message_file = "input/message.txt"
     ciphertext_file = "output/blowfish_ciphertext.txt"
@@ -64,6 +70,7 @@ def test_time():
 
 
 def main():
+    """Example of encryption and decryption with Blowfish."""
     key_file = "input/blowfish_key.txt"
     message_file = "input/message.txt"
     ciphertext_file = "output/blowfish_ciphertext.txt"
