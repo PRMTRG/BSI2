@@ -46,7 +46,7 @@ def encrypt(public_key_file, input_data_file, encrypted_data_file):
     input_file : string
         Path to the file which contents are to be encrypted.
     output_file : string
-        Path to the output file containing encrypted contents.
+        Path to the output file for encrypted contents.
 
     Returns
     -------
@@ -66,11 +66,11 @@ def decrypt(private_key_file, encrypted_data_file, output_file):
     Parameters
     ----------
     private_key_file : string
-        Path to the file containing the ECIES private key..
+        Path to the file containing the ECIES private key.
     input_file : string
         Path to the file which contents are to be decrypted.
     output_file : string
-        Path to the output file containing decrypted contents.
+        Path to the output file for decrypted contents.
 
     Returns
     -------
