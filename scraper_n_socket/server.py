@@ -15,7 +15,22 @@ MAX_SIZE = 1024
 
 
 def decrypt(private_key, data):
-    """ decrypts data using private key"""
+    """
+    Decrypt data encrypted with RSA.
+
+    Parameters
+    ----------
+    private_key : RsaKey
+        RSA private key.
+    data : bytes
+        RSA encrypted data.
+
+    Returns
+    -------
+    string
+        Decrypted data.
+
+    """
     key_size = private_key.size_in_bytes()
     enc_session_key, nonce, tag, ciphertext = \
         data[:key_size], \

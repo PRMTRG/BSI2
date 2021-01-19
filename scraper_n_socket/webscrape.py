@@ -17,8 +17,20 @@ import subprocess
 
 def get_article_links_from_google(query, count):
     """
-    Gets top {count} articles from google based on query
-    returns: array of link strings
+    Get article links from Google Search articles tab.
+
+    Parameters
+    ----------
+    query : string
+        Search query.
+    count : int
+        Number of links to get.
+
+    Returns
+    -------
+    list
+        URLs of the articles.
+
     """
     url = "http://google.com/search"
     position = 0
@@ -44,7 +56,19 @@ def get_article_links_from_google(query, count):
 
 def save_webpage_as_pdf(url, filename):
     """
-    Saves html page of given url as given filename
+    Render and save website to a pdf file.
+
+    Parameters
+    ----------
+    url : string
+        Address of the website.
+    filename : string
+        Name of the output pdf file.
+
+    Returns
+    -------
+    None.
+
     """
     try:
         pdfkit.from_url(url, filename, {"quiet":""})

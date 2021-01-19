@@ -16,7 +16,22 @@ MAX_SIZE = 1024
 
 
 def encrypt(recipient_key, data):
-    """ encrypts data using recipient_key """
+    """
+    Encrypt data using RSA.
+
+    Parameters
+    ----------
+    recipient_key : RsaKey
+        RSA public key.
+    data : bytes
+        Data to encrypt.
+
+    Returns
+    -------
+    bytes
+        RSA encrypted data.
+
+    """
     session_key = get_random_bytes(16)
     cipher_rsa = PKCS1_OAEP.new(recipient_key)
     enc_session_key = cipher_rsa.encrypt(session_key)   
@@ -26,7 +41,22 @@ def encrypt(recipient_key, data):
 
 
 def divide_and_send(s, data):
-    """ divides data to blocks of 1024 and sends message/s """
+    """
+    If needed divide data into blocks of size MAX_SIZE and send blocks to socket.
+    Follow each block with b'0' if there are more blocks coming or b'1' otherwise.
+
+    Parameters
+    ----------
+    s : socket
+        Socket to which the data will be sent.
+    data : bytes
+        Data to send.
+
+    Returns
+    -------
+    None.
+
+    """
     size = len(data)
     while True:
         if size > MAX_SIZE:
