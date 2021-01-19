@@ -13,6 +13,7 @@ import time
 import multiprocessing 
 import sys
 import subprocess
+import argparse
 
 
 def get_article_links_from_google(query, count):
@@ -82,18 +83,34 @@ def main():
     then enumerates through the links array and calls save_webpage_as_pdf in single thread one for each link.
     """
     query = "nvidia"
-    output_dir = "scraper_n_socket/scrape_output"
+    count = 5
+    output_dir = "scrape_output"    
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-q", "--query", required=False,
+                    help="Google search query",
+                    default=query, metavar="query")                
+    ap.add_argument("-c", "--count", required=False, type=int,
+                    help="number of articles to get", 
+                    default=count)  
+    ap.add_argument("-d", "--dir", required=False,
+                    help="Output directory",
+                    default=output_dir, metavar="directory")               
+    args = vars(ap.parse_args())
+    query = args["query"]
+    count = args["count"]
+    output_dir = args["dir"]
+
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    links = get_article_links_from_google(query, 10)
+    links = get_article_links_from_google(query, count)
     processes = []
     for i, link in enumerate(links):
         process = multiprocessing.Process(target=save_webpage_as_pdf, args=(link, f"{output_dir}/{i+1}.pdf"))
         process.start()
         processes.append(process)
-    time.sleep(5)
+    time.sleep(10)
     # Making sure that process of wkhtmltopdf.exe has been stopped
-    p = subprocess.Popen(["powershell.exe", "./kill.ps1"], stdout=sys.stdout)
+    subprocess.Popen(["powershell.exe", "./kill.ps1"], stdout=subprocess.DEVNULL)
     for process in processes:
         process.terminate()
 
