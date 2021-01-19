@@ -16,6 +16,7 @@ MAX_SIZE = 1024
 
 
 def encrypt(recipient_key, data):
+    """ encrypts data using recipient_key """
     session_key = get_random_bytes(16)
     cipher_rsa = PKCS1_OAEP.new(recipient_key)
     enc_session_key = cipher_rsa.encrypt(session_key)   
@@ -25,6 +26,7 @@ def encrypt(recipient_key, data):
 
 
 def divide_and_send(s, data):
+    """ divides data to blocks of 1024 and sends message/s """
     size = len(data)
     while True:
         if size > MAX_SIZE:
@@ -39,6 +41,7 @@ def divide_and_send(s, data):
 
 
 def main():
+    """ client connected to the server listening on 127.0.0.1:65432 able to send message with size=MAX_SIZE """
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
         

@@ -15,6 +15,7 @@ MAX_SIZE = 1024
 
 
 def decrypt(private_key, data):
+    """ decrypts data using private key"""
     key_size = private_key.size_in_bytes()
     enc_session_key, nonce, tag, ciphertext = \
         data[:key_size], \
@@ -29,6 +30,7 @@ def decrypt(private_key, data):
 
 
 def main():
+    """ server listening on 127.0.0.1:65432  waiting for encrypted message to decrypt """
     key = RSA.generate(2048)
     private_key = key
     public_key = key.publickey()
