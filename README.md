@@ -1,4 +1,37 @@
-# Python examples of encryption/decryption
+# BSI Project
+This project consists of two different tasks:
+- Python example of Socket and BeautifulSoup libraries usage
+- Python examples of encryption/decryption
+
+-----
+## Python example of Socket and BeautifulSoup libraries usage
+Can be found within [this](https://github.com/PRMTRG/BSI2/tree/main/scraper_n_socket) directory.
+
+### Main goal
+Main goal of this task was to create:
+- server && client through usage of Socket Library
+
+- Simple web scraper with task of finding top 10 articles related to "pc hardware"
+
+### server && client
+- Server:
+Listening on host: 127.0.0.1 within port: 65432 ( can be changed ). Its main task is to recieve encoded information from client and decode it
+- Client: 
+Takes input from the user then sends encoded input to the server
+
+### Web Scrapers:
+Can be found within [this](https://github.com/PRMTRG/BSI2/tree/main/scraper_n_socket) directory
+
+- webscrape.py:
+Searches for "nvidia" 10 related articles within google search and saves found sites to the pdf files.
+- scraper.py:
+Finds top 10 articles within [this]() website related to "cpus" then prints out all of article titles with links to the article.
+
+----- 
+
+## Python examples of encryption/decryption
+
+Can be found within [this](https://github.com/PRMTRG/BSI2/tree/main/encryption_n_decryption) directory.
 
 This simple program allows for encryption and decryption of files using the following algorithms:
 - AES
@@ -9,16 +42,16 @@ This simple program allows for encryption and decryption of files using the foll
 
 It also contains an example of secure password storage using hashing and salting.
 
-## Usage
+### Usage
 
-### Required python packages
+#### Required python packages
 
 - pycryptodome
 - eciespy
 
 Install them by running "pip install pycryptodome eciespy".
 
-### Symmetrical algorithms
+#### Symmetrical algorithms
 
 1. Run main.py from your terminal of choice.
 2. Select the algorithm to use.
@@ -26,7 +59,7 @@ Install them by running "pip install pycryptodome eciespy".
 4. Input the paths to the necessary files as prompted.
 If the entered path to any of the files is incorrect an error message will be shown and you will be prompted to reenter the paths. You can skip reentering the correctly entered paths by pressing Enter.
  
-### Asymmetrical algorithms
+#### Asymmetrical algorithms
 
 1. Run main.py from your terminal of choice.
 2. Select the algorithm to use.
@@ -34,26 +67,26 @@ If the entered path to any of the files is incorrect an error message will be sh
 4. Input the paths to the necessary files as prompted.
 If the entered path to any of the files is incorrect an error message will be shown and you will be prompted to reenter the paths. You can skip reentering the correctly entered paths by pressing Enter.
 
-### Test execution times of all algorithms
+#### Test execution times of all algorithms
 
 1. Run main.py from your terminal of choice.
 2. Select the option "test execution times of algorithms".
 3. The results will be printed to the terminal.
 
-### Password hashing and salting example
+#### Password hashing and salting example
 
 1. Run salting_example.py from your terminal of choice.
 2. The "register" option allows to you to add a new user. The "log in" allows you to perform a fake log in (an adequate message will be printed to the terminal depending on whether the credentials were correct or not).
 3. You may inspect the file db.json to see what the saved data looks like. It will contain fields for the username, hashed password and a unique salt of the user.
 
-## Key files
+### Key files
 
 Example key files for the symmetrical algorithms are provided. When providing your own files keep in mind these restrictions:
 - the AES key must be 16, 24 or 32 bytes long
 - the Blowfish key must be 4 to 56 bytes
 - the DES3 key must be 24 bytes
 
-## Execution time comparison
+### Execution time comparison
 
 Tests were performed with a 9.48MB input data file. 
 
@@ -73,4 +106,3 @@ Observations:
 Recommendations:
 - the best choice for a symmetrical algorithm appears to be AES
 - the best choice for an asymmetrical algorithm appears to be ECIES
-
