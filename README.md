@@ -23,7 +23,11 @@ Takes input from the user then sends encoded input to the server
 Can be found within [this](https://github.com/PRMTRG/BSI2/tree/main/scraper_n_socket) directory
 
 - webscrape.py:
-Searches for "nvidia" 10 related articles within google search and saves found sites to the pdf files.
+Searches for "nvidia" 10 related articles within google search and saves found sites to the pdf files.  
+To run webscrape properly user needs to install and add to path [wkhtmltopdf](https://wkhtmltopdf.org/downloads.html)  
+In some cases powershell Execution Policy shall be changed:  
+`Set-ExecutionPolicy -ExecutionPolicy Unrestricted` 
+
 - scraper.py:
 Finds top 10 articles within [this]() website related to "cpus" then prints out all of article titles with links to the article.
 
