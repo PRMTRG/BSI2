@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 import threading
 
-URL = "https://techreport.com/"
+URL = "https://techreport.com/tag/cpus/"
 document = requests.get(URL)
 soup = BeautifulSoup(document.content, 'html.parser')
 threads = []
