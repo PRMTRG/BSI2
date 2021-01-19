@@ -10,7 +10,7 @@ Tymoteusz Mirski
 
 
 from Crypto.Cipher import AES
-import utils
+from encryption_n_decryption import utils
 import time
 
 

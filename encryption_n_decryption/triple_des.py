@@ -11,7 +11,7 @@ Tymoteusz Mirski
 
 
 from Crypto.Cipher import DES3
-import utils
+from encryption_n_decryption import utils
 import time
 
 
@@ -35,7 +35,7 @@ def encrypt(key_file, input_file, output_file):
             pass
     cipher = DES3.new(key, DES3.MODE_CFB)
     msg = cipher.iv + cipher.encrypt(data)
-    utils.write_to_file_b(output_file,msg)
+    utils.write_to_file_b(output_file, msg)
 
 
 def decrypt(key_file, input_file, output_file):

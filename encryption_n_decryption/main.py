@@ -4,12 +4,7 @@ Tymoteusz Mirski,
 Igor Motowidło
 """
 
-
-import aes
-import blowfish
-import triple_des
-import rsa
-import ecc
+from encryption_n_decryption import aes, blowfish, ecc, rsa, triple_des
 import sys
 
 

@@ -8,7 +8,7 @@ Tymoteusz Mirski
 
 
 import ecies
-import utils
+from encryption_n_decryption import utils
 import time
 
 

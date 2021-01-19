@@ -9,7 +9,7 @@ Tymoteusz Mirski
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 from Crypto.Cipher import AES, PKCS1_OAEP
-import utils
+from encryption_n_decryption import utils
 import time
 
 
