@@ -1,11 +1,11 @@
 """
 Author:
 Tymoteusz Mirski
+Igor Motowidło
 """
 
 
 import os
-import threading
 import requests as r
 from bs4 import BeautifulSoup
 import pdfkit
@@ -16,6 +16,10 @@ import subprocess
 
 
 def get_article_links_from_google(query, count):
+    """
+    Gets top {count} articles from google based on query
+    returns: array of link strings
+    """
     url = "http://google.com/search"
     position = 0
     max_requests = 3
@@ -38,33 +42,37 @@ def get_article_links_from_google(query, count):
     return links[:count]
 
 
-def save_webpage_as_pdf(link, filename):
+def save_webpage_as_pdf(url, filename):
+    """
+    Saves html page of given url as given filename
+    """
     try:
-        pdfkit.from_url(link, filename, {"quiet":""})
+        pdfkit.from_url(url, filename, {"quiet":""})
     except:
         pass
 
 
 def main():
+    """
+    Gets links of articles by usage of get_article_links_from_google function
+    then enumerates through the links array and calls save_webpage_as_pdf in single thread one for each link.
+    """
     query = "nvidia"
-    output_dir = "scrape_output"
+    output_dir = "scraper_n_socket/scrape_output"
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     links = get_article_links_from_google(query, 10)
     processes = []
     for i, link in enumerate(links):
-        process = multiprocessing.Process(target=save_webpage_as_pdf,
-                                  args=(link, f"{output_dir}/{i+1}.pdf"))
+        process = multiprocessing.Process(target=save_webpage_as_pdf, args=(link, f"{output_dir}/{i+1}.pdf"))
         process.start()
         processes.append(process)
     time.sleep(5)
-    p = subprocess.Popen(["powershell.exe",
-        "./kill.ps1"],
-        stdout=sys.stdout)
+    # Making sure that process of wkhtmltopdf.exe has been stopped
+    p = subprocess.Popen(["powershell.exe", "./kill.ps1"], stdout=sys.stdout)
     for process in processes:
         process.terminate()
 
 
 if __name__ == "__main__":
     main()
-    
