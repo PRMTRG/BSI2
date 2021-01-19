@@ -9,6 +9,10 @@ import threading
 import requests as r
 from bs4 import BeautifulSoup
 import pdfkit
+import time
+import multiprocessing 
+import sys
+import subprocess
 
 
 def get_article_links_from_google(query, count):
@@ -47,14 +51,18 @@ def main():
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     links = get_article_links_from_google(query, 10)
-    threads = []
+    processes = []
     for i, link in enumerate(links):
-        thread = threading.Thread(target=save_webpage_as_pdf,
+        process = multiprocessing.Process(target=save_webpage_as_pdf,
                                   args=(link, f"{output_dir}/{i+1}.pdf"))
-        thread.start()
-        threads.append(thread)
-    for thread in threads:
-        thread.join()
+        process.start()
+        processes.append(process)
+    time.sleep(5)
+    p = subprocess.Popen(["powershell.exe",
+        "./kill.ps1"],
+        stdout=sys.stdout)
+    for process in processes:
+        process.terminate()
 
 
 if __name__ == "__main__":
